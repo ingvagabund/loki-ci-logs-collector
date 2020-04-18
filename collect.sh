@@ -9,7 +9,7 @@ function queue() {
     LIVE="$(jobs | wc -l)"
   done
   echo "${@}"
-  "${@}" | cut -d' ' -f6- | tac >"${TARGET}" &
+  timeout 1m "${@}" | cut -d' ' -f6- | tac >"${TARGET}" &
 }
 
 rm -rf logs
@@ -25,6 +25,8 @@ done
 
 LIVE="$(jobs | wc -l)"
 while [[ "${LIVE}" -ge 1 ]]; do
+  echo "Waiting for ${LIVE} jobs to finish"
+  jobs
   sleep 1
   LIVE="$(jobs | wc -l)"
 done
