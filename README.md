@@ -39,6 +39,10 @@ $ oc apply -f manifests
   available inside nodes), one needs to delete all loki-promtail DS instances, delete all /run/promtail/positions.yaml
   on each node and re-create DS instances. This way, all the logs get collected again. However, loki
   storage will contain duplicates.
+- `logcli label filename` returns filenames for the last 6 hours by default (see https://github.com/grafana/loki/blob/master/docs/api.md#get-lokiapiv1labelnamevalues).
+  In order to get all filename values, one needs to run `curl http://localhost:3100/loki/api/v1/label/filename/values?start=0`
+  since `logcli label filename` does not allow to specify `since` or similar option
+
 
 ## Credit
 
